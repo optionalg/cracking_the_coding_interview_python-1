@@ -7,8 +7,9 @@
 # Time complexity: 
 # The weave function looks like O(2^N). The bst_seq 
 # recursively calls itself on a smaller subsegment.
-# This might be duplicative for each node, so O(N^2)?
-# This needs more thought, but looks like O(N^2*2^N)
+# Within each call, it might do a double for loop O(N^2).
+# Doing this for each node would seem to indicate
+# O(N^3). Needs more thought, but looks like O(N^3*2^N)
 
 import pprint
 import unittest
@@ -56,9 +57,7 @@ def bst_seq(node):
                 bst_result += [[node.value] + seq for seq in suffix]
     else:
         remaining = left or right
-        for seq in remaining:
-            suffix = weave(seq, [], [], [])
-            bst_result += [[node.value] + a_seq for a_seq in suffix]
+        bst_result += [[node.value] + a_seq for a_seq in remaining]
 
     return bst_result
 
