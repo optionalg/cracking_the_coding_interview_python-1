@@ -11,9 +11,6 @@
 # countEval("1^0|0|1", False) -> 2
 # countEval("0&0&0&1^1|0", True) -> 10
 
-# Space complexity: O(1)
-# Time complexity: O(N)
-
 import unittest
 
 def bool_eval(expr, result):
@@ -45,7 +42,11 @@ def bool_eval(expr, result):
         if operator == "&":
             true_ways += left_true*right_true
         elif operator == "|":
-            true_ways += (left_true*right_true) + (left_true*right_false) + (left_false*right_true)
+            true_ways += (
+                (left_true*right_true) 
+                + (left_true*right_false) 
+                + (left_false*right_true)
+            )
         elif operator == "^":
             true_ways += (left_true*right_false) + (left_false*right_true)
 
@@ -60,6 +61,7 @@ class Test(unittest.TestCase):
 
     def test_bool_eval(self):
         self.assertEqual(bool_eval("0&0&0&1^1|0", True), 10)
+        self.assertEqual(bool_eval("1^0|0|1", False), 2)
         
 if __name__ == '__main__':
     unittest.main()
